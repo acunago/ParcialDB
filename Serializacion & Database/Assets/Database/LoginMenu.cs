@@ -1,53 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class LoginMenu : MonoBehaviour
 {
-    public Button loginButton, registerButton;
-    public TMP_InputField usernameField, passwordField;
+    [SerializeField, Tooltip("Data base intance.")]
+    private DBAdmin _dataBase;
+    [SerializeField, Tooltip("Account intance.")]
+    private AccountMenu _account;
 
-    DBAdmin _db;
+    [Header("UI Settings")]
+    [SerializeField, Tooltip("My screen.")]
+    private GameObject _myScreen;
+    [SerializeField, Tooltip("Account screen.")]
+    private GameObject _accountScreen;
+    [SerializeField, Tooltip("User name input field.")]
+    private TMP_InputField _userName;
+    [SerializeField, Tooltip("Password input field.")]
+    private TMP_InputField _password;
+    [SerializeField, Tooltip("Log-in button.")]
+    private Button _logIn;
+    [SerializeField, Tooltip("Register button.")]
+    private Button _register;
 
-    // Start is called before the first frame update
-    void Start()
+    public void RegisterNewUser()
     {
-        _db = FindObjectOfType<DBAdmin>();
+        _dataBase.Register(_userName.text, _password.text);
     }
 
-    public void RegisterBTN()
+    public void UserLogIn()
     {
-        _db.Register(usernameField.text, passwordField.text);
+        _dataBase.Login(_userName.text, _password.text, OnLoginSucceed, OnLoginFail);
     }
 
-    public void LoginBTN()
+    private void OnLoginSucceed(string message)
     {
-        _db.Login(usernameField.text, passwordField.text, OnLoginSucceed, OnLoginFail);
+        Debug.Log(message);
+        _accountScreen.SetActive(true);
+        _account.AccountLogged(_userName.text);
+
+        _userName.text = "";
+        _password.text = "";
+
+        _myScreen.SetActive(false);
     }
 
-    void OnLoginSucceed(string str)
+    private void OnLoginFail(string message)
     {
-        Debug.Log(str);
+        Debug.Log(message);
 
-        FindObjectOfType<Account>().AccountLogged(usernameField.text);
-
-        usernameField.text = "";
-        passwordField.text = "";
-    }
-
-    void OnLoginFail(string str)
-    {
-        Debug.Log(str);
-
-        passwordField.text = "";
+        _password.text = "";
     }
 
     public void VerifyInputs()
     {
-        bool canInteract = (usernameField.text.Length >= 4) && (passwordField.text.Length >= 4);
+        bool canInteract = (_userName.text.Length >= 4) && (_password.text.Length >= 4);
 
-        loginButton.interactable = registerButton.interactable = canInteract;
+        _logIn.interactable = _register.interactable = canInteract;
     }
 }

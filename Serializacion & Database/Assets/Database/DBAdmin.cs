@@ -1,14 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using System;
 using UnityEngine.Networking;
 
 public class DBAdmin : MonoBehaviour
 {
-    public string host, database, dbUser, dbPw;
+    [Header("Data Base Setting")]
+    [SerializeField, Tooltip("Mamp server name.")]
+    private string _host;
+    [SerializeField, Tooltip("Data base name.")]
+    private string _database;
+    [SerializeField, Tooltip("User name.")]
+    public string _userName;
+    [SerializeField, Tooltip("Required password.")]
+    public string _password;
 
-    IEnumerator DoQuery(string phpScript, WWWForm form, Action<string> successCallback = null, Action<string> failureCallback = null)
+    private IEnumerator DoQuery(string phpScript, WWWForm form, Action<string> successCallback = null, Action<string> failureCallback = null)
     {
         UnityWebRequest www = UnityWebRequest.Post("http://localhost/" + phpScript + ".php", form);
         yield return www.SendWebRequest();
@@ -32,13 +39,13 @@ public class DBAdmin : MonoBehaviour
         }
     }
 
-    WWWForm CreateForm()
+    private WWWForm CreateForm()
     {
         WWWForm form = new WWWForm();
-        form.AddField("host", host);
-        form.AddField("database", database);
-        form.AddField("dbuser", dbUser);
-        form.AddField("dbpw", dbPw);
+        form.AddField("host", _host);
+        form.AddField("database", _database);
+        form.AddField("dbuser", _userName);
+        form.AddField("dbpw", _password);
 
         return form;
     }
@@ -60,7 +67,6 @@ public class DBAdmin : MonoBehaviour
         form.AddField("query", query);
 
         StartCoroutine(DoQuery("login", form, successCallback, failureCallback));
-
     }
 
     public void SetScore(string username, string score)
@@ -91,4 +97,32 @@ public class DBAdmin : MonoBehaviour
         StartCoroutine(DoQuery("deletescore", form, successCallback));
     }
 
+    public void FriendRequest(string username, string friendname)
+    {
+        //WWWForm form = CreateForm();
+
+        //form.AddField("user", username);
+        //form.AddField("score", friendname);
+
+        //StartCoroutine(DoQuery("setscore", form));
+    }
+
+    public void GetFriends(string username, Action<string> successCallback, Action<string> failureCallback)
+    {
+        //WWWForm form = CreateForm();
+
+        //string query = "SELECT score FROM `highscores` WHERE user = ('" + username + "');";
+        //form.AddField("query", query);
+
+        //StartCoroutine(DoQuery("getscore", form, successCallback, failureCallback));
+    }
+
+    public void DeleteFriend(string username, Action<string> successCallback)
+    {
+        //WWWForm form = CreateForm();
+
+        //form.AddField("user", username);
+
+        //StartCoroutine(DoQuery("deletescore", form, successCallback));
+    }
 }
