@@ -50,21 +50,21 @@ public class DBAdmin : MonoBehaviour
         return form;
     }
 
-    public void Register(string username, string password)
+    public void Register(string username, string password, Action<string> successCallback, Action<string> failureCallback )
     {
         WWWForm form = CreateForm();
         form.AddField("user", username);
         form.AddField("pass", password);
 
-        StartCoroutine(DoQuery("register", form));
+        StartCoroutine(DoQuery("register", form, successCallback, failureCallback));
     }
 
     public void Login(string username, string password, Action<string> successCallback, Action<string> failureCallback)
     {
         WWWForm form = CreateForm();
 
-        string query = "SELECT usern FROM `accounts` WHERE usern = ('" + username + "') AND passw = ('" + password + "');";
-        form.AddField("query", query);
+        form.AddField("user", username);
+        form.AddField("pass", password);
 
         StartCoroutine(DoQuery("login", form, successCallback, failureCallback));
     }
@@ -81,40 +81,41 @@ public class DBAdmin : MonoBehaviour
     public void GetScore(string username, Action<string> successCallback, Action<string> failureCallback)
     {
         WWWForm form = CreateForm();
-
-        string query = "SELECT score FROM `highscores` WHERE user = ('" + username + "');";
-        form.AddField("query", query);
+        form.AddField("user", username);
 
         StartCoroutine(DoQuery("getscore", form, successCallback, failureCallback));
     }
 
-    public void DeleteScore(string username, Action<string> successCallback)
+    public void DeleteScore(string username, Action<string> successCallback, Action<string> failureCallback)
     {
         WWWForm form = CreateForm();
 
         form.AddField("user", username);
 
-        StartCoroutine(DoQuery("deletescore", form, successCallback));
+        StartCoroutine(DoQuery("deletescore", form, successCallback, getLog));
+    }
+    public void getLog(string log)
+    {
+        Debug.Log(log);
+    }
+    public void FriendRequest(string username, string friendname, Action<string> successCallback = null, Action<string> failureCallback = null)
+    {
+        WWWForm form = CreateForm();
+
+        form.AddField("Solicitante", username);
+        form.AddField("Invitado", friendname);
+
+        StartCoroutine(DoQuery("InsertFriendList", form, getLog, getLog));
     }
 
-    public void FriendRequest(string username, string friendname)
+    public void GetFriends(string username, Action<string> successCallback = null, Action<string> failureCallback = null)
     {
-        //WWWForm form = CreateForm();
+        WWWForm form = CreateForm();
 
-        //form.AddField("user", username);
-        //form.AddField("score", friendname);
+        form.AddField("user", username);
+        form.AddField("estado", "0");
 
-        //StartCoroutine(DoQuery("setscore", form));
-    }
-
-    public void GetFriends(string username, Action<string> successCallback, Action<string> failureCallback)
-    {
-        //WWWForm form = CreateForm();
-
-        //string query = "SELECT score FROM `highscores` WHERE user = ('" + username + "');";
-        //form.AddField("query", query);
-
-        //StartCoroutine(DoQuery("getscore", form, successCallback, failureCallback));
+        StartCoroutine(DoQuery("GetFriendList", form, successCallback,getLog));
     }
 
     public void DeleteFriend(string username, Action<string> successCallback)

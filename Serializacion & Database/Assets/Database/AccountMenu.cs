@@ -28,6 +28,7 @@ public class AccountMenu : MonoBehaviour
         _welcome.text = $"Welcome {_username}!";
 
         _score.Init(_dataBase, _username);
+        _friend.Init(_dataBase, _username);
     }
 
     public void AccountLogOut()

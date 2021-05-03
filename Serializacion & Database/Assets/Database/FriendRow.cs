@@ -20,14 +20,16 @@ public class FriendRow : MonoBehaviour
 
     private DBAdmin _dataBase;
     private string _username;
+    private int _id;
 
-    public void Init(DBAdmin db, string user, string name, int status)
+    public void Init(DBAdmin db, string user, string name, int status, int id)
     {
         _dataBase = db;
         _username = user;
 
         _name.text = name;
-
+        _name.text = name;
+        _id = id;
         switch (status)
         {
             case 0:

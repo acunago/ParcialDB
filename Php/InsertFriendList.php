@@ -17,24 +17,42 @@
 		exit(); //y salgo de la ejecucion
 	}
 
+
+	
 	//Tomo los demas datos del form creado en Unity
 	/////$queryCheck = $_POST["queryCheck"];
-	$username = $_POST["user"];
+	$solicitante = $_POST["Solicitante"];
+	$invitado = $_POST["Invitado"];
 
-	$queryCheck = "SELECT user FROM `highscores` WHERE user = ('".$username."');";
+
+	$validationquery = "SELECT usern FROM `accounts` WHERE usern = ('".$invitado."');";
+	$result = mysqli_query($con, $validationquery);
+	if (mysqli_num_rows($result) == 0)
+	{
+		echo("2: Invitados inexistente");
+		exit();
+		
+	}
+
+	$queryCheck = "SELECT ID, Solicitante, Invitado, Estado FROM `friendlist` WHERE ( Solicitante = ('".$solicitante."') and Invitado = ('".$invitado."') ) or (Solicitante = ('".$invitado."') and Invitado = ('".$solicitante."'));";
 
 	//Ejecuto la sentencia y recibo el resultado en una variable
 	$result = mysqli_query($con, $queryCheck);
 
 	//Si el resultado de la query anterior me devolvio alguna linea
-	if (mysqli_num_rows($result) > 0)
+	if (mysqli_num_rows($result) <= 0)
 	{
 		//Elimino el usuario de la tabla
 		/////$queryDelete = $_POST["queryDelete"];
 		
-		$queryDelete = "DELETE FROM highscores WHERE user = ('" . $username . "');";
+		$insertuserquery = "INSERT INTO `friendlist` (Solicitante, Invitado,Estado) VALUES ('" . $solicitante . "',
+																					  '" . $invitado . "',
+																					  1);";
+		mysqli_query($con, $insertuserquery) or die("2: INSERT error");
+	}else{
 
-		mysqli_query($con, $queryDelete) or die("2: Delete error");
+		echo("2: Ya fue dado de alta");
+		exit();
 	}
 
 	echo("0");

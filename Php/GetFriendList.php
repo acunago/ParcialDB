@@ -19,12 +19,14 @@
 
 
 	//Tomo el dato del form creado en Unity (en este caso es la sentencia completa)
-	//$insertquery = $_POST["query"];
 
 	$username = $_POST["user"];
-	$pw = $_POST["pass"];
+	$estado = $_POST["estado"];
+	
 
-	$insertquery = "SELECT usern FROM `accounts` WHERE usern = ('".$username."') AND passw = ('".$pw."');";
+
+	$insertquery = "SELECT ID, Solicitante, Invitado, Estado FROM `friendlist` WHERE (Solicitante = ('".$username."') OR Invitado = ('".$username."')) and (('".$estado."') = 0 OR Estado = ('".$estado."'));";
+	//$insertquery = "SELECT ID, Solicitante, Invitado, Estado FROM `friendlist` ;";
 
 	//Envio la sentencia a la conexion establecida (por eso utilizo la variable donde hice mi conexion $con)
 	$result = mysqli_query($con, $insertquery); 
@@ -34,15 +36,21 @@
 	//En este caso me deberia devolver el username que sea igual al que vino de Unity siempre y cuando coincida la password
 	//Por ende pregunto si el resultado de la ejecucion de la sentencia me devolvio algun registro.
 	//Si no tiene ningun registro quiere decir que ningun usuario registrado coincide con los datos llegados de Unity
-	if (mysqli_num_rows($result) != 1)
+	if (mysqli_num_rows($result) == 0)
 	{
-		echo("2: Select player query failed");
+		echo("2: Player inexistente");
 		exit();
 	}
 	
 	//Si llego hasta aca quiere decir que no hubo ningun problema y devuelvo un 0 para luego utilizarlo como condicion en Unity
 	echo("0");
-
+	
+	while($row = mysqli_fetch_array($result))
+	{
+		$ret = $ret . "\n" . $row["ID"] . "\t" . $row["Solicitante"] . "\t" . $row["Invitado"] . "\t" . $row["Estado"];
+	}
+	
+	echo($ret);
 	//Cierro la conexion
 	mysqli_close($con);
 

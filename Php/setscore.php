@@ -20,6 +20,7 @@
 	//Tomo los demas datos del form creado en Unity
 	/////$queryCheck = $_POST["queryCheck"];
 	$username = $_POST["user"];
+	$valor = $_POST["score"];
 
 	$queryCheck = "SELECT user FROM `highscores` WHERE user = ('".$username."');";
 
@@ -31,11 +32,16 @@
 	{
 		//Elimino el usuario de la tabla
 		/////$queryDelete = $_POST["queryDelete"];
-		
-		$queryDelete = "DELETE FROM highscores WHERE user = ('" . $username . "');";
+	
+		$queryUpdate = "UPDATE `highscores` SET `score`= ('" . $valor . "') WHERE user = ('" . $username . "');";
 
-		mysqli_query($con, $queryDelete) or die("2: Delete error");
+		mysqli_query($con, $queryUpdate) or die("2: update error");
+	}else
+	{
+		$queryInsert = "INSERT INTO `highscores`(`user`, `score`) VALUES (('" . $username . "'),('" . $valor . "'))";
+		mysqli_query($con, $queryInsert) or die("2: insert error");
 	}
+	
 
 	echo("0");
 	

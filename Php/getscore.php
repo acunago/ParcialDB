@@ -20,10 +20,10 @@
 
 	
 	//Tomo los demas datos del form creado en Unity
-	$query = $_POST["query"];
+	//$query = $_POST["query"];
 
-	/////$username = $_POST["user"];
-	/////$query = "SELECT score FROM `highscores` WHERE user = ('".$username."');";
+	$username = $_POST["user"];
+	$query = "SELECT score FROM `highscores` WHERE user = ('".$username."');";
 
 	//Ejecuto la sentencia y recibo el resultado en una variable
 	$result = mysqli_query($con, $query);

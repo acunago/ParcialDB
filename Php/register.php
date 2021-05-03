@@ -21,6 +21,18 @@
 	$username = $_POST["user"];
 	$pw = $_POST["pass"];
 
+	$insertquery = "SELECT usern FROM `accounts` WHERE usern = ('".$username."');";
+	$result = mysqli_query($con, $insertquery); 
+	
+	if (mysqli_num_rows($result) > 0)
+	{
+		echo("2: el Usuario ya existe, query failed");
+		exit();
+	}
+
+	//Envio la sentencia a la conexion establecida (por eso utilizo la variable donde hice mi conexion $con)
+	$result = mysqli_query($con, $insertquery); 
+
 	//Guardo la sentencia en una variable para usarla en el query
 	$insertuserquery = "INSERT INTO accounts (usern, passw) VALUES ('" . $username . "',
 																		'" . $pw . "');";

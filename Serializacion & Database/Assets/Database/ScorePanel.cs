@@ -45,12 +45,16 @@ public class ScorePanel : MonoBehaviour
 
     public void DeleteScore()
     {
-        _dataBase.DeleteScore(_username, DeleteScoreSucceed);
+        _dataBase.DeleteScore(_username, DeleteScoreSucceed, DeleteScoreFailed);
     }
 
     void DeleteScoreSucceed(string message)
     {
         Debug.Log($"Score deleted: {message}");
         _score.text = "0";
+    }
+    void DeleteScoreFailed(string message)
+    {
+        //hacer cosas
     }
 }

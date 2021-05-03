@@ -25,14 +25,21 @@ public class LoginMenu : MonoBehaviour
 
     public void RegisterNewUser()
     {
-        _dataBase.Register(_userName.text, _password.text);
+        _dataBase.Register(_userName.text, _password.text, OnRegisterSucceed, OnRegisterFail);
     }
 
     public void UserLogIn()
     {
         _dataBase.Login(_userName.text, _password.text, OnLoginSucceed, OnLoginFail);
     }
+    private void OnRegisterSucceed(string message)
+    {
 
+    }
+    private void OnRegisterFail(string message)
+    {
+        Debug.Log(message);
+    }
     private void OnLoginSucceed(string message)
     {
         Debug.Log(message);

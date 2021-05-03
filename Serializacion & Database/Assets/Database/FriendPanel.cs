@@ -29,21 +29,27 @@ public class FriendPanel : MonoBehaviour
 
     public void SendIvitation()
     {
-        //CODIGO DE GONZA
-
-        _friends.Refresh();
+        _dataBase.FriendRequest(_username, _friendName.text);
+        InitfList();
     }
 
     public void DeleteFriend()
     {
         //CODIGO DE GONZA
 
-        _friends.Refresh();
+        InitfList();
     }
 
     public void ShowFriendList()
     {
+        InitfList();
         _friendScreen.SetActive(true);
+
+
+    }
+
+    private void InitfList()
+    {
         _friends.Init(_username);
         _friends.Refresh();
     }
