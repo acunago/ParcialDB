@@ -22,14 +22,14 @@ public class FriendRow : MonoBehaviour
     private string _username;
     private int _id;
 
-    public void Init(DBAdmin db, string user, string name, int status, int id)
+    public void Init(DBAdmin db, string user, int id, string name, int status)
     {
         _dataBase = db;
         _username = user;
+        _id = id;
 
         _name.text = name;
-        _name.text = name;
-        _id = id;
+
         switch (status)
         {
             case 0:
@@ -51,7 +51,13 @@ public class FriendRow : MonoBehaviour
                 _ignore.SetActive(false);
                 break;
             case 3:
-                _status.text = "rejected";
+                _status.text = "Rejected :(";
+                _delete.SetActive(true);
+                _accept.SetActive(false);
+                _ignore.SetActive(false);
+                break;
+            case 4:
+                _status.text = "Ignored XD";
                 _delete.SetActive(true);
                 _accept.SetActive(false);
                 _ignore.SetActive(false);
