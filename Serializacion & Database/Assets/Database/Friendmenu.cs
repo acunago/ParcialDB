@@ -16,14 +16,14 @@ public class Friendmenu : MonoBehaviour
     private GameObject _myScreen;
     [SerializeField, Tooltip("Scrollview content.")]
     private GameObject _content;
+    [SerializeField, Tooltip("Message text.")]
+    private TMP_Text _message;
 
     private List<GameObject> myRows = new List<GameObject>();
-
-    private string _username;
+    private string _username = default;
 
     public void Init(string user)
     {
-
         _username = user;
     }
 
@@ -33,8 +33,9 @@ public class Friendmenu : MonoBehaviour
         {
             Destroy(item);
         }
+
         myRows.Clear();
-        _dataBase.GetFriends(_username, OnGetFriendsSucceed);
+        _dataBase.GetFriends(_username, OnGetFriendsSucceed, OnGetFriendsFailed);
     }
     private void OnGetFriendsSucceed(string message)
     {
@@ -80,8 +81,10 @@ public class Friendmenu : MonoBehaviour
                     break;
             }
         }
-
-        Debug.Log(message);
+    }
+    void OnGetFriendsFailed(string message)
+    {
+        _message.text = message;
     }
 
     public void Close()

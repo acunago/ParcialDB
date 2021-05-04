@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
@@ -7,6 +8,13 @@ public class MainMenu : MonoBehaviour
     private GameObject _myScreen;
     [SerializeField, Tooltip("Log-In screen.")]
     private GameObject _loginScreen;
+    [SerializeField, Tooltip("Message text.")]
+    private TMP_Text _message;
+
+    private void OnEnable()
+    {
+        _message.text = "You are not logged.";
+    }
 
     public void Enter()
     {

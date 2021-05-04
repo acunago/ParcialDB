@@ -7,20 +7,30 @@ public class ScorePanel : MonoBehaviour
     [SerializeField, Tooltip("Score input field.")]
     private TMP_InputField _score;
 
-    private DBAdmin _dataBase;
-    private string _username;
+    private DBAdmin _dataBase = default;
+    private string _username = default;
+    private TMP_Text _message = default;
 
-    public void Init(DBAdmin db, string user)
+    public void Init(DBAdmin db, string user, TMP_Text message)
     {
         _dataBase = db;
         _username = user;
+        _message = message;
 
         GetScore();
     }
 
     public void SetScore()
     {
-        _dataBase.SetScore(_username, _score.text);
+        _dataBase.SetScore(_username, _score.text, SetScoreSucceed, SetScoreFailed);
+    }
+    void SetScoreSucceed(string message)
+    {
+        _message.text = message;
+    }
+    void SetScoreFailed(string message)
+    {
+        _message.text = message;
     }
 
     public void GetScore()
@@ -30,8 +40,6 @@ public class ScorePanel : MonoBehaviour
 
     void GetScoreSucceed(string message)
     {
-        Debug.Log($"Bruto: {message}");
-
         string[] rows = message.Split('\n');
 
         string score = rows[1];
@@ -40,7 +48,7 @@ public class ScorePanel : MonoBehaviour
 
     void GetScoreFailed(string message)
     {
-        Debug.Log(message);
+        _message.text = message;
     }
 
     public void DeleteScore()
@@ -50,11 +58,11 @@ public class ScorePanel : MonoBehaviour
 
     void DeleteScoreSucceed(string message)
     {
-        Debug.Log($"Score deleted: {message}");
+        _message.text = message;
         _score.text = "0";
     }
     void DeleteScoreFailed(string message)
     {
-        //hacer cosas
+        _message.text = message;
     }
 }

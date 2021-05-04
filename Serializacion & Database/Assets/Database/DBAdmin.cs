@@ -69,13 +69,13 @@ public class DBAdmin : MonoBehaviour
         StartCoroutine(DoQuery("login", form, successCallback, failureCallback));
     }
 
-    public void SetScore(string username, string score)
+    public void SetScore(string username, string score, Action<string> successCallback, Action<string> failureCallback)
     {
         WWWForm form = CreateForm();
         form.AddField("user", username);
         form.AddField("score", score);
 
-        StartCoroutine(DoQuery("setscore", form));
+        StartCoroutine(DoQuery("setscore", form, successCallback, failureCallback));
     }
 
     public void GetScore(string username, Action<string> successCallback, Action<string> failureCallback)
@@ -92,11 +92,7 @@ public class DBAdmin : MonoBehaviour
 
         form.AddField("user", username);
 
-        StartCoroutine(DoQuery("deletescore", form, successCallback, getLog));
-    }
-    public void getLog(string log)
-    {
-        Debug.Log(log);
+        StartCoroutine(DoQuery("deletescore", form, successCallback, failureCallback));
     }
     public void FriendRequest(string username, string friendname, Action<string> successCallback = null, Action<string> failureCallback = null)
     {
@@ -105,7 +101,7 @@ public class DBAdmin : MonoBehaviour
         form.AddField("Solicitante", username);
         form.AddField("Invitado", friendname);
 
-        StartCoroutine(DoQuery("InsertFriendList", form, getLog, getLog));
+        StartCoroutine(DoQuery("InsertFriendList", form, successCallback, failureCallback));
     }
 
     public void GetFriends(string username, Action<string> successCallback = null, Action<string> failureCallback = null)
@@ -115,7 +111,7 @@ public class DBAdmin : MonoBehaviour
         form.AddField("user", username);
         form.AddField("estado", "0");
 
-        StartCoroutine(DoQuery("GetFriendList", form, successCallback,getLog));
+        StartCoroutine(DoQuery("GetFriendList", form, successCallback, failureCallback));
     }
 
     public void DeleteFriend(string username, string friend, Action<string> successCallback = null, Action<string> failureCallback = null)
@@ -126,7 +122,7 @@ public class DBAdmin : MonoBehaviour
         form.AddField("Invitado", friend);
 
 
-        StartCoroutine(DoQuery("deleteFriendlist", form, getLog, getLog));
+        StartCoroutine(DoQuery("deleteFriendlist", form, successCallback, failureCallback));
     }
     public void UpdateFriend(string username, string friend, int estado, Action<string> successCallback = null, Action<string> failureCallback = null)
     {
@@ -137,6 +133,6 @@ public class DBAdmin : MonoBehaviour
         form.AddField("Estado", estado);
 
 
-        StartCoroutine(DoQuery("updateFriendlist", form, getLog, getLog));
+        StartCoroutine(DoQuery("updateFriendlist", form, successCallback, failureCallback));
     }
 }

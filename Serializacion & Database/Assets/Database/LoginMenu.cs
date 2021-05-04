@@ -22,6 +22,8 @@ public class LoginMenu : MonoBehaviour
     private Button _logIn;
     [SerializeField, Tooltip("Register button.")]
     private Button _register;
+    [SerializeField, Tooltip("Message text.")]
+    private TMP_Text _message;
 
     public void RegisterNewUser()
     {
@@ -34,15 +36,16 @@ public class LoginMenu : MonoBehaviour
     }
     private void OnRegisterSucceed(string message)
     {
-
+        _message.text = message;
     }
     private void OnRegisterFail(string message)
     {
-        Debug.Log(message);
+        _message.text = message;
     }
     private void OnLoginSucceed(string message)
     {
-        Debug.Log(message);
+        _message.text = message;
+
         _accountScreen.SetActive(true);
         _account.AccountLogged(_userName.text);
 
@@ -54,7 +57,7 @@ public class LoginMenu : MonoBehaviour
 
     private void OnLoginFail(string message)
     {
-        Debug.Log(message);
+        _message.text = message;
 
         _password.text = "";
     }
