@@ -36,7 +36,7 @@
 		
 		$queryDelete = "DELETE FROM friendlist  WHERE ( Solicitante = ('".$solicitante."') and Invitado = ('".$invitado."') ) or (Solicitante = ('".$invitado."') and Invitado = ('".$solicitante."'));";
 
-		mysqli_query($con, $queryDelete) or die("2: Delete error");
+		mysqli_query($con, $queryDelete) or die("Fail deleted friendlist");
 	}
 
 	echo("0");

@@ -38,7 +38,7 @@
 	//Si no tiene ningun registro quiere decir que ningun usuario registrado coincide con los datos llegados de Unity
 	if (mysqli_num_rows($result) == 0)
 	{
-		echo("2: Player inexistente");
+		echo("User without friends");
 		exit();
 	}
 	

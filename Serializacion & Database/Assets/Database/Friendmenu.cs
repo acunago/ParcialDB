@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Friendmenu : MonoBehaviour
 {
@@ -21,10 +22,11 @@ public class Friendmenu : MonoBehaviour
 
     private List<GameObject> myRows = new List<GameObject>();
     private string _username = default;
-
-    public void Init(string user)
+    Action _myRefresh;
+    public void Init(string user, Action myRefresh)
     {
-        _username = user;
+        _myRefresh = myRefresh;
+           _username = user;
     }
 
     public void Refresh()
@@ -61,21 +63,21 @@ public class Friendmenu : MonoBehaviour
             {
                 case 1: // Invitacion
                     if (registros[1] == _username) // Lo invite yo
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 0, Refresh);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 0, _myRefresh);
                     else // Me invito el
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 1, Refresh);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 1, _myRefresh);
                     break;
                 case 2: // Amigos
                     if (registros[1] == _username)
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 2, Refresh);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 2, _myRefresh);
                     else
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 2, Refresh);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 2, _myRefresh);
                     break;
                 case 3: // Rechazo
                     if (registros[1] == _username) // Me rechazo el :(
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 3, Refresh);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 3, _myRefresh);
                     else // Lo rechace yo XD
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 4, Refresh);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 4, _myRefresh);
                     break;
                 default:
                     break;

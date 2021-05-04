@@ -36,7 +36,7 @@
 	//Si no tiene ningun registro quiere decir que ningun usuario registrado coincide con los datos llegados de Unity
 	if (mysqli_num_rows($result) != 1)
 	{
-		echo("2: Select player query failed");
+		echo("User invalid");
 		exit();
 	}
 	

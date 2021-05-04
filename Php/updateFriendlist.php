@@ -37,7 +37,7 @@
 						
 		$queryDelete = "UPDATE `friendlist` SET `Estado`=('".$estado."')  WHERE ( Solicitante = ('".$solicitante."') and Invitado = ('".$invitado."') ) or (Solicitante = ('".$invitado."') and Invitado = ('".$solicitante."'));";
 
-		mysqli_query($con, $queryDelete) or die("2: Update Estado fallo");
+		mysqli_query($con, $queryDelete) or die("update error on friendlist");
 	}
 
 	echo("0");

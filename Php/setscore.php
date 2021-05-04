@@ -39,11 +39,11 @@
 	}else
 	{
 		$queryInsert = "INSERT INTO `highscores`(`user`, `score`) VALUES (('" . $username . "'),('" . $valor . "'))";
-		mysqli_query($con, $queryInsert) or die("2: insert error");
+		mysqli_query($con, $queryInsert) or die("Set Score Failed");
 	}
 	
 
-	echo("0");
+	echo("Score seted");
 	
 	//Cierro la conexion
 	mysqli_close($con);

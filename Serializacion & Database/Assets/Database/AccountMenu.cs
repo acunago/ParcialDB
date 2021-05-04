@@ -34,8 +34,8 @@ public class AccountMenu : MonoBehaviour
     public void AccountLogOut()
     {
         _username = "";
-
         _mainScreen.SetActive(true);
+        _score.OnClose();
         _friend.OnClose();
         _myScreen.SetActive(false);
     }

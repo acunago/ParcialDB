@@ -24,17 +24,20 @@ public class FriendPanel : MonoBehaviour
     }
     public void OnClose()
     {
+        _friendName.text = "";
         _friendScreen.SetActive(false);
     }
 
     public void SendIvitation()
     {
         _dataBase.FriendRequest(_username, _friendName.text, SendIvitationSucceed, SendIvitationFailed);
-        InitfList();
+
+
     }
     void SendIvitationSucceed(string message)
     {
-        _message.text = message;
+        _message.text = "";
+        ShowFriendList();
     }
     void SendIvitationFailed(string message)
     {
@@ -45,7 +48,7 @@ public class FriendPanel : MonoBehaviour
     {
         _dataBase.DeleteFriend(_username, _friendName.text, DeleteFriendSucceed, DeleteFriendFailed);
 
-        InitfList();
+        ShowFriendList();
     }
     void DeleteFriendSucceed(string message)
     {
@@ -58,13 +61,10 @@ public class FriendPanel : MonoBehaviour
 
     public void ShowFriendList()
     {
-        InitfList();
+        _friendScreen.SetActive(false); //refresh debido al scroll view
         _friendScreen.SetActive(true);
-    }
-
-    private void InitfList()
-    {
-        _friends.Init(_username);
+        _friends.Init(_username, ShowFriendList);
         _friends.Refresh();
     }
+
 }

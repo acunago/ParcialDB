@@ -1657,6 +1657,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: SetScoreB
       objectReference: {fileID: 0}
+    - target: {fileID: 337090660347893669, guid: 1002e4ee4e9f8784ca4f0600e92fcda7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 337090660347893669, guid: 1002e4ee4e9f8784ca4f0600e92fcda7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 337090660347893669, guid: 1002e4ee4e9f8784ca4f0600e92fcda7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 337090660347893669, guid: 1002e4ee4e9f8784ca4f0600e92fcda7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 670672856}
+    - target: {fileID: 337090660347893669, guid: 1002e4ee4e9f8784ca4f0600e92fcda7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetScore
+      objectReference: {fileID: 0}
+    - target: {fileID: 337090660347893669, guid: 1002e4ee4e9f8784ca4f0600e92fcda7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4626202547829103262, guid: 1002e4ee4e9f8784ca4f0600e92fcda7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3293,8 +3323,8 @@ Camera:
   m_GameObject: {fileID: 1070681979}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.4235938, g: 0.45409656, b: 0.5377358, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

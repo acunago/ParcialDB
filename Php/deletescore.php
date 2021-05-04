@@ -34,7 +34,7 @@
 		
 		$queryDelete = "DELETE FROM highscores WHERE user = ('" . $username . "');";
 
-		mysqli_query($con, $queryDelete) or die("2: Delete error");
+		mysqli_query($con, $queryDelete) or die("Error delete highscores");
 	}
 
 	echo("0");

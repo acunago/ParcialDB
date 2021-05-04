@@ -32,7 +32,7 @@
 	if (mysqli_num_rows($result) != 1)
 	{
 		//Devuelvo que el usuario no ingreso un score
-		echo("User didn't uploaded a score");
+		echo("No score");
 		exit();
 	}
 

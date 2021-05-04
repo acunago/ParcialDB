@@ -26,7 +26,7 @@
 	
 	if (mysqli_num_rows($result) > 0)
 	{
-		echo("2: el Usuario ya existe, query failed");
+		echo("User already exist ");
 		exit();
 	}
 
@@ -39,10 +39,10 @@
 
 	//Envio la sentencia a la conexion establecida (por eso utilizo la variable donde hice mi conexion $con)
 	//Si hubo error "salgo" con or die y un string
-	mysqli_query($con, $insertuserquery) or die("2: Insert player query failed"); //or die($con->error); //Error code #2 = Query failed
+	mysqli_query($con, $insertuserquery) or die("Creation Failed"); //or die($con->error); //Error code #2 = Query failed
 
 	//Si llego hasta aca quiere decir que no hubo ningun problema y devuelvo un 0 para luego utilizarlo como condicion en Unity
-	echo ("0");
+	echo ("Creation Succeded");
 
 	//Cierro la conexion
 	mysqli_close($con);

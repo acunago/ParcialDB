@@ -19,7 +19,11 @@ public class ScorePanel : MonoBehaviour
 
         GetScore();
     }
+    public void OnClose()
+    {
+        _score.text = "";
 
+    }
     public void SetScore()
     {
         _dataBase.SetScore(_username, _score.text, SetScoreSucceed, SetScoreFailed);
@@ -44,6 +48,7 @@ public class ScorePanel : MonoBehaviour
 
         string score = rows[1];
         _score.text = score;
+        _message.text = "";
     }
 
     void GetScoreFailed(string message)
@@ -58,7 +63,7 @@ public class ScorePanel : MonoBehaviour
 
     void DeleteScoreSucceed(string message)
     {
-        _message.text = message;
+        _message.text = "Score Deleted";
         _score.text = "0";
     }
     void DeleteScoreFailed(string message)

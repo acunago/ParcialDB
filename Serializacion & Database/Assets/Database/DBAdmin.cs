@@ -77,7 +77,10 @@ public class DBAdmin : MonoBehaviour
 
         StartCoroutine(DoQuery("setscore", form, successCallback, failureCallback));
     }
-
+    public void log(string mylog)
+    {
+        Debug.Log(mylog);
+    }
     public void GetScore(string username, Action<string> successCallback, Action<string> failureCallback)
     {
         WWWForm form = CreateForm();

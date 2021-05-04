@@ -29,7 +29,7 @@
 	$result = mysqli_query($con, $validationquery);
 	if (mysqli_num_rows($result) == 0)
 	{
-		echo("2: Invitados inexistente");
+		echo("imaginary friend not exist");
 		exit();
 		
 	}
@@ -51,7 +51,7 @@
 		mysqli_query($con, $insertuserquery) or die("2: INSERT error");
 	}else{
 
-		echo("2: Ya fue dado de alta");
+		echo("Already friended");
 		exit();
 	}
 
