@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class FriendRow : MonoBehaviour
 {
@@ -21,15 +22,15 @@ public class FriendRow : MonoBehaviour
     private DBAdmin _dataBase;
     private string _username;
     private int _id;
-
-    public void Init(DBAdmin db, string user, int id, string name, int status)
+    Action _action;
+    public void Init(DBAdmin db, string user, int id, string name, int status, Action myAction)
     {
         _dataBase = db;
         _username = user;
         _id = id;
 
         _name.text = name;
-
+        _action = myAction;
         switch (status)
         {
             case 0:
@@ -69,14 +70,17 @@ public class FriendRow : MonoBehaviour
 
     public void Delete()
     {
-        //CODIGO GONZA
+        _dataBase.DeleteFriend(_username, _name.text);
+        _action?.Invoke();
     }
     public void Accept()
     {
-        //CODIGO GONZA
+        _dataBase.UpdateFriend(_username, _name.text,2);
+        _action?.Invoke();
     }
     public void Ignore()
     {
-        //CODIGO GONZA
+        _dataBase.UpdateFriend(_username, _name.text, 3);
+        _action?.Invoke();
     }
 }

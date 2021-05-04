@@ -17,33 +17,41 @@ public class Friendmenu : MonoBehaviour
     [SerializeField, Tooltip("Scrollview content.")]
     private GameObject _content;
 
+    private List<GameObject> myRows = new List<GameObject>();
+
     private string _username;
 
     public void Init(string user)
     {
+
         _username = user;
     }
 
     public void Refresh()
     {
+        foreach (var item in myRows)
+        {
+            Destroy(item);
+        }
+        myRows.Clear();
         _dataBase.GetFriends(_username, OnGetFriendsSucceed);
     }
     private void OnGetFriendsSucceed(string message)
     {
-        //float yPos = 0;
+        float yPos = 0;
 
         string[] rows = message.Split('\n');
         foreach (var item in rows)
         {
             string[] registros = item.Split('\t');
             // 0:Id 1:Solicitante 2:Receptor 3:Status
-
+            if (registros.Length < 2) continue;
             GameObject go = Instantiate(_row, _content.transform);
-
+            myRows.Add(go);
             /* POSIBLE SOLUCION DE POSICION*/
-            //RectTransform rt = go.GetComponent<RectTransform>();
-            //rt.anchoredPosition = new Vector2(0, yPos);
-            //yPos -= 50;
+            RectTransform rt = go.GetComponent<RectTransform>();
+            rt.anchoredPosition = new Vector2(0, yPos);
+            yPos -= 50;
 
             FriendRow fr = go.GetComponent<FriendRow>();
             int st = int.Parse(registros[3]);
@@ -52,21 +60,21 @@ public class Friendmenu : MonoBehaviour
             {
                 case 1: // Invitacion
                     if (registros[1] == _username) // Lo invite yo
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 1);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 0, Refresh);
                     else // Me invito el
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 0);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 1, Refresh);
                     break;
                 case 2: // Amigos
                     if (registros[1] == _username)
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 2);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 2, Refresh);
                     else
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 2);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 2, Refresh);
                     break;
                 case 3: // Rechazo
                     if (registros[1] == _username) // Me rechazo el :(
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 3);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[2], 3, Refresh);
                     else // Lo rechace yo XD
-                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 4);
+                        fr.Init(_dataBase, _username, int.Parse(registros[0]), registros[1], 4, Refresh);
                     break;
                 default:
                     break;

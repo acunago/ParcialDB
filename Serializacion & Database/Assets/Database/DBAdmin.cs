@@ -118,12 +118,25 @@ public class DBAdmin : MonoBehaviour
         StartCoroutine(DoQuery("GetFriendList", form, successCallback,getLog));
     }
 
-    public void DeleteFriend(string username, Action<string> successCallback)
+    public void DeleteFriend(string username, string friend, Action<string> successCallback = null, Action<string> failureCallback = null)
     {
-        //WWWForm form = CreateForm();
+        WWWForm form = CreateForm();
 
-        //form.AddField("user", username);
+        form.AddField("Solicitante", username);
+        form.AddField("Invitado", friend);
 
-        //StartCoroutine(DoQuery("deletescore", form, successCallback));
+
+        StartCoroutine(DoQuery("deleteFriendlist", form, getLog, getLog));
+    }
+    public void UpdateFriend(string username, string friend, int estado, Action<string> successCallback = null, Action<string> failureCallback = null)
+    {
+        WWWForm form = CreateForm();
+
+        form.AddField("Solicitante", username);
+        form.AddField("Invitado", friend);
+        form.AddField("Estado", estado);
+
+
+        StartCoroutine(DoQuery("updateFriendlist", form, getLog, getLog));
     }
 }

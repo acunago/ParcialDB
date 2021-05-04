@@ -35,7 +35,7 @@ public class FriendPanel : MonoBehaviour
 
     public void DeleteFriend()
     {
-        //CODIGO DE GONZA
+        _dataBase.DeleteFriend(_username, _friendName.text);
 
         InitfList();
     }
